@@ -2,11 +2,10 @@
   "name": "image-mailer-scripts",
   "version": "1.0.0",
   "private": true,
-  "description": "Checks Gmail via IMAP for image requests, generates an AI image, and emails it back as an attachment",
+  "description": "Checks Gmail via IMAP for content requests, classifies intent, and emails back an AI-generated image, video, or song",
   "dependencies": {
     "imapflow": "^1.0.163",
     "mailparser": "^3.6.9",
     "nodemailer": "^6.9.13"
   }
 }
-
