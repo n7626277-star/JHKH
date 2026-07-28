@@ -32,7 +32,6 @@ function downloadImage(promptText) {
 }
 
 function extractEmail(fromField) {
-  // fromField can be like: [{ address: 'foo@bar.com', name: 'Foo' }]
   if (Array.isArray(fromField) && fromField.length > 0) {
     return fromField[0].address;
   }
@@ -79,11 +78,12 @@ async function main() {
   const lock = await client.getMailboxLock('INBOX');
 
   try {
-    // מחפש מיילים שלא נקראו
     const unseenUids = await client.search({ seen: false });
 
+    console.log(`נמצאו ${unseenUids ? unseenUids.length : 0} מיילים שלא נקראו בתיבה.`);
+
     if (!unseenUids || unseenUids.length === 0) {
-      console.log('אין מיילים חדשים לעיבוד.');
+      console.log('אין מיילים חדשים לעיבוד. (אם שלחת מייל בדיקה - ודא שהוא עדיין מסומן כ"לא נקרא"/מודגש בג\'ימייל)');
       return;
     }
 
@@ -91,8 +91,10 @@ async function main() {
       const message = await client.fetchOne(uid, { envelope: true });
       const subject = message.envelope.subject || '';
 
+      console.log(`נמצא מייל לא נקרא, נושא: "${subject}"`);
+
       if (!subject.startsWith(SUBJECT_PREFIX)) {
-        // לא מייל רלוונטי - מסמנים כנקרא כדי לא לבדוק אותו שוב ושוב, בלי לעבד
+        console.log(`  -> מדלג: הנושא לא מתחיל ב-"${SUBJECT_PREFIX}"`);
         continue;
       }
 
@@ -113,7 +115,6 @@ async function main() {
         console.error(`שגיאה בעיבוד הבקשה מ-${senderEmail}:`, err.message);
       }
 
-      // מסמן כנקרא כדי לא לעבד שוב בהרצה הבאה
       await client.messageFlagsAdd(uid, ['\\Seen']);
     }
   } finally {
