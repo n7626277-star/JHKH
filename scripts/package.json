@@ -5,6 +5,8 @@
   "description": "Checks Gmail via IMAP for image requests, generates an AI image, and emails it back as an attachment",
   "dependencies": {
     "imapflow": "^1.0.163",
+    "mailparser": "^3.6.9",
     "nodemailer": "^6.9.13"
   }
 }
+
