@@ -16,7 +16,7 @@ if (!GMAIL_USER || !GMAIL_APP_PASSWORD) {
 function downloadImage(promptText) {
   return new Promise((resolve, reject) => {
     const encoded = encodeURIComponent(promptText);
-    const url = `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&nologo=true`;
+    const url = `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&nologo=true&model=flux&enhance=true`;
     https
       .get(url, (res) => {
         if (res.statusCode !== 200) {
