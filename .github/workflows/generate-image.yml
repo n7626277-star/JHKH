@@ -27,4 +27,6 @@ jobs:
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          EXTRA_ALLOWED_SENDERS: ${{ secrets.EXTRA_ALLOWED_SENDERS }}
         run: node check-and-send.js
